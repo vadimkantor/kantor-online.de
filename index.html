@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vadim Kantor – Senior Solution Architect, Dev Lead & IT Consultant" />
+  <title>Vadim Kantor – Solution Architect & IT Consultant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #050810;
+      --bg2:       #080d1a;
+      --bg3:       #0d1525;
+      --card:      #0f1829;
+      --border:    rgba(255,255,255,0.07);
+      --accent:    #3b82f6;
+      --accent2:   #6366f1;
+      --accent3:   #06b6d4;
+      --gold:      #f59e0b;
+      --text:      #e8edf7;
+      --text2:     #94a3b8;
+      --text3:     #64748b;
+      --radius:    12px;
+      --radius-lg: 24px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    ::selection { background: rgba(59,130,246,0.3); }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ===== NOISE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(5,8,16,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text2);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: transparent;
+      color: var(--text2);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.04em;
+    }
+    .lang-btn:hover { border-color: var(--accent); color: var(--text); background: rgba(59,130,246,0.08); }
+    .lang-btn .flag { font-size: 1rem; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text2); border-radius: 2px; transition: 0.3s; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 7rem 2rem 4rem;
+      overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      background: rgba(59,130,246,0.08);
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+    }
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title .line2 {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text2);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .hero-roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 3rem;
+    }
+    .role-tag {
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      color: var(--text2);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .role-tag:hover { border-color: var(--accent); color: var(--text); }
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text3);
+      margin-top: 4px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .hero-photo-wrap {
+      position: relative;
+    }
+    .hero-photo-ring {
+      position: absolute;
+      inset: -12px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+      opacity: 0.3;
+      filter: blur(20px);
+    }
+    .hero-photo {
+      position: relative;
+      z-index: 1;
+      border-radius: 24px;
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid var(--border);
+    }
+    .hero-photo-badge {
+      position: absolute;
+      z-index: 2;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+    }
+    .hero-photo-badge .icon { font-size: 1.4rem; }
+    .hero-photo-badge .pbadge-title { font-size: 0.78rem; font-weight: 700; }
+    .hero-photo-badge .pbadge-sub { font-size: 0.7rem; color: var(--text3); }
+
+    /* ===== SECTION COMMONS ===== */
+    section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; width: 100%; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text2);
+      max-width: 600px;
+      line-height: 1.75;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ===== VALUE PROPS ===== */
+    #value { background: var(--bg2); }
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .value-card {
+      background: var(--card);
+      padding: 2.5rem 2rem;
+      transition: background 0.25s;
+    }
+    .value-card:hover { background: #131d30; }
+    .value-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .vi-blue { background: rgba(59,130,246,0.12); }
+    .vi-purple { background: rgba(99,102,241,0.12); }
+    .vi-cyan { background: rgba(6,182,212,0.12); }
+    .vi-gold { background: rgba(245,158,11,0.12); }
+    .vi-green { background: rgba(16,185,129,0.12); }
+    .vi-red { background: rgba(239,68,68,0.12); }
+    .value-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .value-card p { font-size: 0.88rem; color: var(--text2); line-height: 1.65; }
+
+    /* ===== EXPERTISE ===== */
+    #expertise { background: var(--bg); }
+    .expertise-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .skill-domains { display: flex; flex-direction: column; gap: 1rem; }
+    .skill-btn {
+      padding: 14px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      transition: all 0.2s;
+      color: var(--text2);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      width: 100%;
+    }
+    .skill-btn.active, .skill-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(59,130,246,0.08);
+    }
+    .skill-btn .skill-icon { font-size: 1.3rem; width: 28px; text-align: center; }
+    .skill-panel { display: none; }
+    .skill-panel.active { display: block; }
+    .skill-panel h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .skill-panel .panel-sub {
+      color: var(--text2);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+    .skill-bars { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+    .skill-bar-item { }
+    .skill-bar-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.83rem; font-weight: 500; }
+    .skill-bar-header span:last-child { color: var(--text3); }
+    .skill-bar-bg { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      width: 0;
+      transition: width 1s cubic-bezier(0.4,0,0.2,1);
+    }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tech-tag {
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: var(--text2);
+      background: var(--bg2);
+      font-weight: 500;
+    }
+    .pt-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.25);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-top: 1.5rem;
+    }
+
+    /* ===== WHY ME ===== */
+    #whyme { background: var(--bg2); }
+    .whyme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .whyme-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .whyme-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .whyme-card:hover { border-color: rgba(59,130,246,0.25); transform: translateY(-2px); }
+    .whyme-card:hover::before { opacity: 1; }
+    .whyme-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: rgba(59,130,246,0.12);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .whyme-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .whyme-card p { font-size: 0.87rem; color: var(--text2); line-height: 1.65; }
+
+    /* ===== PROJECTS ===== */
+    #projects { background: var(--bg); }
+    .projects-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 2rem;
+      align-items: start;
+      transition: border-color 0.25s;
+      cursor: default;
+    }
+    .project-card:hover { border-color: rgba(59,130,246,0.25); }
+    .project-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem; }
+    .project-year {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .project-role {
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: rgba(99,102,241,0.12);
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+    .project-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .project-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+    .project-meta { text-align: right; }
+    .project-pt {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .project-pt-label { font-size: 0.72rem; color: var(--text3); font-weight: 500; margin-top: 2px; }
+    .project-industry {
+      margin-top: 8px;
+      font-size: 0.72rem;
+      color: var(--accent3);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+    .project-tag {
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text3);
+    }
+
+    /* ===== CERTS ===== */
+    #certs { background: var(--bg2); }
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+    .cert-card:hover { border-color: rgba(245,158,11,0.35); }
+    .cert-icon {
+      width: 40px; height: 40px; min-width: 40px;
+      border-radius: 8px;
+      background: rgba(245,158,11,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .cert-year { font-size: 0.72rem; color: var(--gold); font-weight: 700; margin-bottom: 3px; }
+    .cert-name { font-size: 0.85rem; font-weight: 600; line-height: 1.35; }
+    .cert-issuer { font-size: 0.75rem; color: var(--text3); margin-top: 3px; }
+
+    /* ===== REFERENCES ===== */
+    #references { background: var(--bg); }
+    .ref-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .ref-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+    }
+    .ref-quote {
+      position: absolute;
+      top: 1.5rem; right: 1.75rem;
+      font-size: 3rem;
+      line-height: 1;
+      color: rgba(59,130,246,0.15);
+      font-family: Georgia, serif;
+    }
+    .ref-text {
+      font-size: 0.88rem;
+      color: var(--text2);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+    .ref-author { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+    .ref-company { font-size: 0.75rem; color: var(--text3); margin-top: 2px; }
+
+    /* ===== OPEN SOURCE ===== */
+    #opensource { background: var(--bg2); }
+    .os-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+    .os-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .os-card:hover { border-color: rgba(16,185,129,0.35); }
+    .os-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .os-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .os-role { font-size: 0.75rem; color: var(--accent3); font-weight: 600; }
+    .os-period { font-size: 0.72rem; color: var(--text3); margin-top: 4px; }
+
+    /* ===== PUBLICATIONS ===== */
+    #pubs { background: var(--bg); }
+    .pubs-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .pub-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+    .pub-card:hover { border-color: rgba(99,102,241,0.35); }
+    .pub-icon {
+      width: 44px; height: 44px; min-width: 44px;
+      border-radius: 10px;
+      background: rgba(99,102,241,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .pub-type { font-size: 0.7rem; color: var(--accent2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .pub-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+    .pub-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--bg2); }
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .contact-cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .contact-cta-sub { font-size: 1rem; color: var(--text2); line-height: 1.75; margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-link-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(59,130,246,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .contact-link-label { font-size: 0.75rem; color: var(--text3); margin-bottom: 2px; }
+    .contact-link-value { font-size: 0.9rem; font-weight: 600; }
+    .avail-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+    .avail-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .avail-dot {
+      width: 10px; height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    .avail-title { font-size: 1rem; font-weight: 700; }
+    .avail-items { display: flex; flex-direction: column; gap: 0.75rem; }
+    .avail-item { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; }
+    .avail-item .check { color: #10b981; font-size: 1rem; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text3);
+      background: var(--bg);
+    }
+
+    /* ===== FADE-IN ANIMATIONS ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-photo-wrap { max-width: 340px; margin: 0 auto; }
+      .expertise-layout { grid-template-columns: 1fr; }
+      .skill-domains { flex-direction: row; flex-wrap: wrap; }
+      .skill-btn { width: auto; }
+      .value-grid { grid-template-columns: 1fr 1fr; }
+      .certs-grid { grid-template-columns: 1fr 1fr; }
+      .os-grid { grid-template-columns: 1fr 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--bg2); padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); gap: 1.2rem; }
+      .hamburger { display: flex; }
+      .value-grid { grid-template-columns: 1fr; }
+      .whyme-grid { grid-template-columns: 1fr; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-meta { text-align: left; }
+      .certs-grid { grid-template-columns: 1fr; }
+      .ref-grid { grid-template-columns: 1fr; }
+      .os-grid { grid-template-columns: 1fr 1fr; }
+      .pubs-layout { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 4rem 1.25rem; }
+      nav { padding: 0 1.25rem; }
+      .hero { padding: 5rem 1.25rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">VK</a>
+  <div class="nav-links" id="navLinks">
+    <a href="#value" data-i18n="nav_value">Mehrwert</a>
+    <a href="#expertise" data-i18n="nav_expertise">Expertise</a>
+    <a href="#projects" data-i18n="nav_projects">Projekte</a>
+    <a href="#certs" data-i18n="nav_certs">Zertifikate</a>
+    <a href="#references" data-i18n="nav_refs">Referenzen</a>
+    <a href="#contact" data-i18n="nav_contact">Kontakt</a>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">
+      <span class="flag" id="langFlag">🇬🇧</span>
+      <span id="langLabel">EN</span>
+    </button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge" data-i18n="hero_badge">Verfügbar für neue Projekte</div>
+      <h1 class="hero-title">
+        Vadim Kantor<br>
+        <span class="line2" data-i18n="hero_title_line2">Solution Architect &<br>IT Consultant</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero_sub">
+        30+ Jahre Erfahrung an der Schnittstelle von Architektur, Cloud und Innovation.
+        Von der Whiteboard-Skizze bis zum produktiven System – ich baue das, was bleibt.
+      </p>
+      <div class="hero-roles">
+        <span class="role-tag" data-i18n="role1">Solution Architect</span>
+        <span class="role-tag" data-i18n="role2">Dev Lead</span>
+        <span class="role-tag" data-i18n="role3">Cloud Consultant</span>
+        <span class="role-tag" data-i18n="role4">DevOps Expert</span>
+        <span class="role-tag" data-i18n="role5">Big Data Engineer</span>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">30+</div>
+          <div class="stat-label" data-i18n="stat1">Jahre Erfahrung</div>
+        </div>
+        <div>
+          <div class="stat-num">4000+</div>
+          <div class="stat-label" data-i18n="stat2">Personentage Projekte</div>
+        </div>
+        <div>
+          <div class="stat-num">15+</div>
+          <div class="stat-label" data-i18n="stat3">Zertifizierungen</div>
+        </div>
+        <div>
+          <div class="stat-num">DE/EN/RU</div>
+          <div class="stat-label" data-i18n="stat4">Sprachen</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo-wrap fade-up">
+      <div class="hero-photo-ring"></div>
+      <img src="vk.jpeg" alt="Vadim Kantor" class="hero-photo" />
+      <div class="hero-photo-badge">
+        <span class="icon">🎓</span>
+        <div>
+          <div class="pbadge-title" data-i18n="photo_badge_title">M.Sc. Math. Physik</div>
+          <div class="pbadge-sub">iSAQB · AWS · CKAD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VALUE PROPOSITIONS -->
+<section id="value">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="value_label">Warum Vadim Kantor</div>
+      <h2 class="section-title" data-i18n="value_title">Der Unterschied, der <span class="gradient-text">zählt</span></h2>
+      <p class="section-sub" data-i18n="value_sub">Erfahrung allein reicht nicht – es braucht die Fähigkeit, Komplexität zu beherrschen, Teams zu führen und Systeme zu bauen, die skalieren.</p>
+    </div>
+    <div class="value-grid fade-up">
+      <div class="value-card">
+        <div class="value-icon vi-blue">🏗️</div>
+        <h3 data-i18n="v1_title">Architektur mit Tiefe</h3>
+        <p data-i18n="v1_text">iSAQB-zertifiziert, über 900 Personentage in serviceorientierten IT-Architekturen. Von SOA bis Event-Driven – ich entwerfe Systeme, die unter echtem Last-Druck funktionieren.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon vi-purple">☁️</div>
+        <h3 data-i18n="v2_title">Cloud-Native von Grund auf</h3>
+        <p data-i18n="v2_text">AWS Certified Solutions Architect, CKAD, Terraform Associate. Kubernetes, OpenShift, Helm – ich betreibe Container-Plattformen im Enterprise-Maßstab, nicht nur in der Sandbox.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon vi-cyan">⚡</div>
+        <h3 data-i18n="v3_title">Big Data & Echtzeit</h3>
+        <p data-i18n="v3_text">1300+ PT mit Apache Kafka, Flink, Spark. Ich baue Event-Streaming-Architekturen, die Millionen von Ereignissen pro Tag verarbeiten – zuverlässig, skalierbar, nachvollziehbar.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon vi-gold">👥</div>
+        <h3 data-i18n="v4_title">Leadership & Mentoring</h3>
+        <p data-i18n="v4_text">Scrum Master, technischer Projektleiter, Trainer – ich führe Teams mit klarer Kommunikation, treffe architektonische Entscheidungen und entwickle Entwickler weiter.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon vi-green">🔒</div>
+        <h3 data-i18n="v5_title">Security by Design</h3>
+        <p data-i18n="v5_text">OAuth2, Keycloak, JAAS, SSO – Sicherheitsarchitektur ist kein Afterthought, sondern integraler Bestandteil meiner Lösungen. 1100+ PT in Identity & Access Management.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon vi-red">📊</div>
+        <h3 data-i18n="v6_title">Mathmatische Präzision</h3>
+        <p data-i18n="v6_text">M.Sc. Mathematische Physik – ich löse Probleme analytisch. ML/DL-Erfahrung mit TensorFlow, Keras, Scikit-Learn. Performance-Engpässe finde ich dort, wo andere aufgeben.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="exp_label">Technische Kompetenz</div>
+      <h2 class="section-title" data-i18n="exp_title">Expertise im <span class="gradient-text">Detail</span></h2>
+      <p class="section-sub" data-i18n="exp_sub">Breite Technologiebasis – tief verankert in jedem Bereich.</p>
+    </div>
+    <div class="expertise-layout fade-up">
+      <div class="skill-domains">
+        <button class="skill-btn active" onclick="showPanel('cloud')" id="btn-cloud">
+          <span class="skill-icon">☁️</span> <span data-i18n="domain_cloud">Cloud & DevOps</span>
+        </button>
+        <button class="skill-btn" onclick="showPanel('backend')" id="btn-backend">
+          <span class="skill-icon">⚙️</span> <span data-i18n="domain_backend">Backend & Architektur</span>
+        </button>
+        <button class="skill-btn" onclick="showPanel('data')" id="btn-data">
+          <span class="skill-icon">📊</span> <span data-i18n="domain_data">Big Data & Streaming</span>
+        </button>
+        <button class="skill-btn" onclick="showPanel('databases')" id="btn-databases">
+          <span class="skill-icon">🗄️</span> <span data-i18n="domain_databases">Datenbanken</span>
+        </button>
+        <button class="skill-btn" onclick="showPanel('frontend')" id="btn-frontend">
+          <span class="skill-icon">🎨</span> <span data-i18n="domain_frontend">Frontend & UI</span>
+        </button>
+        <button class="skill-btn" onclick="showPanel('ai')" id="btn-ai">
+          <span class="skill-icon">🤖</span> <span data-i18n="domain_ai">AI & Machine Learning</span>
+        </button>
+      </div>
+      <div>
+        <!-- Cloud Panel -->
+        <div class="skill-panel active" id="panel-cloud">
+          <h3 data-i18n="cloud_title">Cloud-Native & DevOps</h3>
+          <p class="panel-sub" data-i18n="cloud_sub">Über 1500+ Personentage in Container-Orchestrierung, CI/CD und Cloud-Infrastruktur bei Deutschen Blue-Chip-Unternehmen.</p>
+          <div class="skill-bars">
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Kubernetes / OpenShift</span><span data-i18n="exp_7y">~7 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>AWS (ECS, EKS, Aurora, MSK…)</span><span data-i18n="exp_8y">~8 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>CI/CD (GitLab, Jenkins, Helm)</span><span data-i18n="exp_10y">~10 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Terraform / Ansible / Puppet</span><span data-i18n="exp_5y">~5 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Monitoring (Grafana, Prometheus, ELK)</span><span data-i18n="exp_8y">~8 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="93"></div></div>
+            </div>
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">AWS ECS</span><span class="tech-tag">EKS</span><span class="tech-tag">OpenShift 4.x</span>
+            <span class="tech-tag">Helm</span><span class="tech-tag">GitLab CI/CD</span><span class="tech-tag">Jenkins</span>
+            <span class="tech-tag">Terraform</span><span class="tech-tag">Ansible</span><span class="tech-tag">Docker</span>
+            <span class="tech-tag">Prometheus</span><span class="tech-tag">Grafana</span><span class="tech-tag">Kibana</span>
+          </div>
+          <div class="pt-badge">🏆 <span data-i18n="cert_ckad">CKAD 2023 · AWS Solutions Architect · HashiCorp Terraform Associate</span></div>
+        </div>
+        <!-- Backend Panel -->
+        <div class="skill-panel" id="panel-backend">
+          <h3 data-i18n="backend_title">Backend & Software-Architektur</h3>
+          <p class="panel-sub" data-i18n="backend_sub">3.000+ Personentage in Java Enterprise-Entwicklung. Von J2EE über Spring Boot bis Quarkus Cloud-Native – ich beherrsche den gesamten Stack.</p>
+          <div class="skill-bars">
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Java (8–21), Quarkus, Spring Boot</span><span data-i18n="exp_25y">~25 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="98"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Microservices, DDD, CQRS</span><span data-i18n="exp_10y">~10 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="94"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>REST, gRPC, Protobuf, SOAP</span><span data-i18n="exp_15y">~15 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="96"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>SOA, ESB, EAI (JBoss, WebSphere)</span><span data-i18n="exp_8y">~8 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Python, TypeScript, Go, C++</span><span data-i18n="exp_varied">variiert</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div>
+            </div>
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">Java 21</span><span class="tech-tag">Quarkus</span><span class="tech-tag">Spring Boot</span>
+            <span class="tech-tag">Spring Cloud</span><span class="tech-tag">Apache Camel</span><span class="tech-tag">OSGi</span>
+            <span class="tech-tag">JPA/Hibernate</span><span class="tech-tag">Keycloak</span><span class="tech-tag">OAuth2</span>
+          </div>
+          <div class="pt-badge">🏆 <span data-i18n="cert_isaqb">iSAQB CPSA · Java EE & SOA Architect (Sun/Oracle)</span></div>
+        </div>
+        <!-- Data Panel -->
+        <div class="skill-panel" id="panel-data">
+          <h3 data-i18n="data_title">Big Data & Event Streaming</h3>
+          <p class="panel-sub" data-i18n="data_sub">1300+ Personentage mit Apache Kafka. Ich baue Event-Driven Architekturen, die unter realem Produktionsdruck performen.</p>
+          <div class="skill-bars">
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Apache Kafka / Kafka Streams / MSK</span><span data-i18n="exp_6y">~6 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="93"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Apache Flink / Spark</span><span data-i18n="exp_4y">~4 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Elasticsearch / OpenSearch</span><span data-i18n="exp_10y">~10 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>RabbitMQ, MQTT, AMQP</span><span data-i18n="exp_8y">~8 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
+            </div>
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">Kafka Streams</span><span class="tech-tag">KSQL</span><span class="tech-tag">Avro/Protobuf</span>
+            <span class="tech-tag">Apache Flink</span><span class="tech-tag">Spark</span><span class="tech-tag">Cassandra</span>
+            <span class="tech-tag">Elasticsearch</span><span class="tech-tag">DynamoDB</span><span class="tech-tag">Redis</span>
+          </div>
+        </div>
+        <!-- Databases Panel -->
+        <div class="skill-panel" id="panel-databases">
+          <h3 data-i18n="db_title">Datenbanken & Persistenz</h3>
+          <p class="panel-sub" data-i18n="db_sub">4000+ Personentage – 25+ Jahre Datenbankexpertise. Von Oracle PL/SQL über PostgreSQL bis NoSQL in der Cloud.</p>
+          <div class="skill-bars">
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Oracle DB / PL/SQL</span><span data-i18n="exp_20y">~20 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>PostgreSQL (inkl. AWS Aurora)</span><span data-i18n="exp_8y">~8 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>MongoDB / DocumentDB</span><span data-i18n="exp_6y">~6 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Cassandra / DynamoDB / Redis</span><span data-i18n="exp_5y">~5 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div>
+            </div>
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">Oracle 12c</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">AWS Aurora</span>
+            <span class="tech-tag">MongoDB</span><span class="tech-tag">DynamoDB</span><span class="tech-tag">Cassandra</span>
+            <span class="tech-tag">Redis</span><span class="tech-tag">Liquibase</span><span class="tech-tag">Flyway</span>
+          </div>
+        </div>
+        <!-- Frontend Panel -->
+        <div class="skill-panel" id="panel-frontend">
+          <h3 data-i18n="fe_title">Frontend & Visualisierung</h3>
+          <p class="panel-sub" data-i18n="fe_sub">Full-Stack-Kompetenz: Angular, React, TypeScript – plus Grafana Custom Plugins und Dashboard-Entwicklung.</p>
+          <div class="skill-bars">
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>TypeScript / JavaScript</span><span data-i18n="exp_10y">~10 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Angular (2+)</span><span data-i18n="exp_7y">~7 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Grafana / Kibana Dashboards</span><span data-i18n="exp_8y">~8 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div>
+            </div>
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">Angular</span><span class="tech-tag">React</span><span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">Grafana SDK</span><span class="tech-tag">Apache ECharts</span><span class="tech-tag">Vue.js</span>
+            <span class="tech-tag">Node.js</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">JSF</span>
+          </div>
+        </div>
+        <!-- AI Panel -->
+        <div class="skill-panel" id="panel-ai">
+          <h3 data-i18n="ai_title">AI / Machine Learning</h3>
+          <p class="panel-sub" data-i18n="ai_sub">Mathematisch fundiert durch M.Sc. in Mathematischer Physik. Praktische ML-Erfahrung in Produktionssystemen – Anomalieerkennung, Echtzeit-Analyse, Prognose.</p>
+          <div class="skill-bars">
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>TensorFlow / Keras</span><span data-i18n="exp_5y">~5 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Scikit-Learn / NumPy / Pandas</span><span data-i18n="exp_5y">~5 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header"><span>Apache Spark ML</span><span data-i18n="exp_4y">~4 Jahre</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="72"></div></div>
+            </div>
+          </div>
+          <div class="tech-tags">
+            <span class="tech-tag">TensorFlow</span><span class="tech-tag">Keras</span><span class="tech-tag">Scikit-Learn</span>
+            <span class="tech-tag">NumPy</span><span class="tech-tag">SciPy</span><span class="tech-tag">Matplotlib</span>
+            <span class="tech-tag">Seaborn</span><span class="tech-tag">Jupyter</span><span class="tech-tag">Python</span>
+          </div>
+          <div class="pt-badge">🏆 <span data-i18n="cert_ml">Google ML TensorFlow · Stanford ML (Coursera) · Apache Spark AI</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY ME -->
+<section id="whyme">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="whyme_label">Fit für Ihr Unternehmen</div>
+      <h2 class="section-title" data-i18n="whyme_title">Was Sie <span class="gradient-text">wirklich bekommen</span></h2>
+      <p class="section-sub" data-i18n="whyme_sub">Kein Berater, der Folien schreibt und verschwindet – sondern einer, der liefert.</p>
+    </div>
+    <div class="whyme-grid fade-up">
+      <div class="whyme-card">
+        <div class="whyme-num">01</div>
+        <h3 data-i18n="w1_title">Sofort produktiv</h3>
+        <p data-i18n="w1_text">Durch 30 Jahre Erfahrung in Logistik, Pharma, Telekom, Banking und Versicherung kennen ich die Muster. Kein monatelanges Einarbeiten – ich liefere vom ersten Sprint an.</p>
+      </div>
+      <div class="whyme-card">
+        <div class="whyme-num">02</div>
+        <h3 data-i18n="w2_title">Technischer Anker im Team</h3>
+        <p data-i18n="w2_text">Als Dev Lead oder Architekt halte ich die technische Vision zusammen. Code Reviews, Architekturentscheidungen, Eskalationen – ich überbrücke Fachbereich und Entwicklung.</p>
+      </div>
+      <div class="whyme-card">
+        <div class="whyme-num">03</div>
+        <h3 data-i18n="w3_title">Enterprise-Klasse, ohne Overhead</h3>
+        <p data-i18n="w3_text">Projekte bei Deutsche Bahn, Deutsche Telekom, Commerzbank, Deutsche Bank, Lufthansa – ich weiß, wie Lösungen im echten Enterprise-Umfeld funktionieren müssen.</p>
+      </div>
+      <div class="whyme-card">
+        <div class="whyme-num">04</div>
+        <h3 data-i18n="w4_title">Kommunikation auf allen Ebenen</h3>
+        <p data-i18n="w4_text">Technisch präzise mit dem Team, klar und verständlich mit dem Management. Ich moderiere, trainiere und präsentiere – auf Deutsch, Englisch und Russisch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="proj_label">Ausgewählte Projekte</div>
+      <h2 class="section-title" data-i18n="proj_title">Projekte, die <span class="gradient-text">zählen</span></h2>
+      <p class="section-sub" data-i18n="proj_sub">Ein Auszug aus über 30 abgeschlossenen Engagements bei führenden deutschen und internationalen Unternehmen.</p>
+    </div>
+    <div class="projects-grid fade-up">
+
+      <div class="project-card">
+        <div>
+          <div class="project-header">
+            <span class="project-year">2023–2024</span>
+            <span class="project-role" data-i18n="proj_role_arch">Senior Solution Architect</span>
+          </div>
+          <h3 data-i18n="p1_title">Big Data Event-Driven Architektur</h3>
+          <p data-i18n="p1_desc">Skalierbare Lösung zur Datenspeicherung und -abfrage in AWS. Konsolidierung aus RabbitMQ, Kafka, MQTT, REST. Echtzeit-Monitoring mit OpenSearch/Kibana, CloudWatch, Grafana.</p>
+          <div class="project-tags">
+            <span class="project-tag">Java 21</span><span class="project-tag">Quarkus</span><span class="project-tag">Kafka</span>
+            <span class="project-tag">AWS OpenSearch</span><span class="project-tag">Aurora</span><span class="project-tag">DynamoDB</span>
+            <span class="project-tag">Kubernetes</span><span class="project-tag">Grafana</span>
+          </div>
+        </div>
+        <div class="project-meta">
+          <div class="project-pt">230</div>
+          <div class="project-pt-label">Personentage</div>
+          <div class="project-industry" data-i18n="industry_logistics">Logistik & Transport</div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-header">
+            <span class="project-year">2021–2023</span>
+            <span class="project-role" data-i18n="proj_role_devops">DevOps Experte & Cloud Berater</span>
+          </div>
+          <h3 data-i18n="p2_title">Cloud-Plattform & Kubernetes Migration (KXS)</h3>
+          <p data-i18n="p2_desc">Aufbau einer eigenen Cloud-Plattform, Migration von VMs in Container, Kubernetes-Cluster-Management, Kong API-Gateway-Integration, CI/CD-Optimierung.</p>
+          <div class="project-tags">
+            <span class="project-tag">Kubernetes</span><span class="project-tag">AWS</span><span class="project-tag">Azure</span>
+            <span class="project-tag">Spring Boot</span><span class="project-tag">Kong</span><span class="project-tag">Keycloak</span>
+            <span class="project-tag">GitLab CI</span><span class="project-tag">Prometheus</span>
+          </div>
+        </div>
+        <div class="project-meta">
+          <div class="project-pt">400</div>
+          <div class="project-pt-label">Personentage</div>
+          <div class="project-industry" data-i18n="industry_pharma">Pharmaindustrie</div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-header">
+            <span class="project-year">2018–2019</span>
+            <span class="project-role" data-i18n="proj_role_bigdata">Senior Big Data Engineer</span>
+          </div>
+          <h3 data-i18n="p3_title">Event-Driven Echtzeit-Analyseplattform (RI)</h3>
+          <p data-i18n="p3_desc">Datenkonsolidierung aus Kafka, RabbitMQ, Cassandra, Aurora. Anomalieerkennung mit ML (TensorFlow, Keras). State-Management mit Apache Flink und Spark.</p>
+          <div class="project-tags">
+            <span class="project-tag">Kafka Streams</span><span class="project-tag">Apache Flink</span><span class="project-tag">Spark</span>
+            <span class="project-tag">TensorFlow</span><span class="project-tag">Cassandra</span><span class="project-tag">Elasticsearch</span>
+            <span class="project-tag">AWS MSK</span>
+          </div>
+        </div>
+        <div class="project-meta">
+          <div class="project-pt">270</div>
+          <div class="project-pt-label">Personentage</div>
+          <div class="project-industry" data-i18n="industry_logistics">Logistik & Transport</div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-header">
+            <span class="project-year">2011–2012</span>
+            <span class="project-role" data-i18n="proj_role_ci">Senior CI/CD Berater</span>
+          </div>
+          <h3 data-i18n="p4_title">Continuous Delivery Plattform (Deutsche Telekom)</h3>
+          <p data-i18n="p4_desc">Aufbau einer vollständigen CD-Plattform in der Telekom Cloud. Chef, Ansible, Puppet, Jenkins, OpenStack, OpenShift. 440 Personentage im Enterprise-Maßstab.</p>
+          <div class="project-tags">
+            <span class="project-tag">Jenkins</span><span class="project-tag">Ansible</span><span class="project-tag">Chef</span>
+            <span class="project-tag">OpenStack</span><span class="project-tag">OpenShift</span>
+          </div>
+        </div>
+        <div class="project-meta">
+          <div class="project-pt">440</div>
+          <div class="project-pt-label">Personentage</div>
+          <div class="project-industry" data-i18n="industry_telco">Telekommunikation</div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-header">
+            <span class="project-year">2013–2014</span>
+            <span class="project-role" data-i18n="proj_role_backend">Senior Backend Developer</span>
+          </div>
+          <h3 data-i18n="p5_title">Hochskalierbare Integrationsplattform (Telekom Kundencenter)</h3>
+          <p data-i18n="p5_desc">ESB-basierte Integrationsplattform mit ELK-Stack als zentralem Log-Management-Tool. BPMN 2.0, WebSphere ESB, JBoss ESB, SAML 2.0, CI/CD.</p>
+          <div class="project-tags">
+            <span class="project-tag">JBoss ESB</span><span class="project-tag">ELK Stack</span><span class="project-tag">BPMN 2.0</span>
+            <span class="project-tag">Java EE</span><span class="project-tag">SAML 2.0</span><span class="project-tag">Jenkins</span>
+          </div>
+        </div>
+        <div class="project-meta">
+          <div class="project-pt">345</div>
+          <div class="project-pt-label">Personentage</div>
+          <div class="project-industry" data-i18n="industry_telco">Telekommunikation</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="certs_label">Weiterbildung & Zertifizierungen</div>
+      <h2 class="section-title" data-i18n="certs_title">Lebenslang <span class="gradient-text">lernend</span></h2>
+      <p class="section-sub" data-i18n="certs_sub">Kontinuierliche Investition in das eigene Wissen – seit über 25 Jahren.</p>
+    </div>
+    <div class="certs-grid fade-up">
+      <div class="cert-card">
+        <div class="cert-icon">🏛️</div>
+        <div>
+          <div class="cert-year">2012</div>
+          <div class="cert-name">iSAQB Certified Professional for Software Architecture</div>
+          <div class="cert-issuer">iSAQB e.V.</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">☁️</div>
+        <div>
+          <div class="cert-year">2017</div>
+          <div class="cert-name">AWS Certified Solutions Architect Associate</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">⎈</div>
+        <div>
+          <div class="cert-year">2023</div>
+          <div class="cert-name">Certified Kubernetes Application Developer (CKAD)</div>
+          <div class="cert-issuer">Cloud Native Computing Foundation</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🔧</div>
+        <div>
+          <div class="cert-year">2020</div>
+          <div class="cert-name">HashiCorp Certified: Terraform Associate</div>
+          <div class="cert-issuer">HashiCorp</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🤖</div>
+        <div>
+          <div class="cert-year">2018</div>
+          <div class="cert-name">Machine Learning on Google Cloud (TensorFlow)</div>
+          <div class="cert-issuer">Google Cloud</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🧠</div>
+        <div>
+          <div class="cert-year">2018</div>
+          <div class="cert-name">Machine Learning by Andrew Ng</div>
+          <div class="cert-issuer">Stanford / Coursera</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">☕</div>
+        <div>
+          <div class="cert-year">2007</div>
+          <div class="cert-name">Java EE and SOA Architect</div>
+          <div class="cert-issuer">Sun Microsystems</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🔄</div>
+        <div>
+          <div class="cert-year">2010</div>
+          <div class="cert-name">Scrum Master Certification</div>
+          <div class="cert-issuer">Scrum Alliance</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🌊</div>
+        <div>
+          <div class="cert-year">2022</div>
+          <div class="cert-name">Azure Architect Technologies</div>
+          <div class="cert-issuer">Microsoft Azure</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REFERENCES -->
+<section id="references">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="refs_label">Kundenstimmen</div>
+      <h2 class="section-title" data-i18n="refs_title">Was Kunden <span class="gradient-text">sagen</span></h2>
+    </div>
+    <div class="ref-grid fade-up">
+      <div class="ref-card">
+        <div class="ref-quote">"</div>
+        <p class="ref-text" data-i18n="ref1_text">"Der Berater ist in einer sehr kritischen Projektphase in das bestehende Team eingetreten und hat sich sehr schnell in die Teamstruktur eingefunden. Er entwickelte ein generisches Framework für Performance- und Lasttests unserer hochkomplexen J2EE-Anwendung. Das Ergebnis ist ein vollständiges innovatives Produkt zur Performancemessung. Mit seiner Leistung waren wir stets außerordentlich zufrieden."</p>
+        <div class="ref-author">Projektleiter</div>
+        <div class="ref-company">Deutsche Post · Projekt MOVE</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-quote">"</div>
+        <p class="ref-text" data-i18n="ref2_text">"Herr Kantor verfügt über ein äußerst umfassendes und detailliertes Fachwissen sowohl im Testmanagement als auch in der Softwareprogrammierung, und er wendet die vorhandenen Methoden und Techniken jederzeit sehr wirksam in der Praxis an."</p>
+        <div class="ref-author">Projektleiter</div>
+        <div class="ref-company">Commerzbank · Projekt RVLEXA</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-quote">"</div>
+        <p class="ref-text" data-i18n="ref3_text">"Herr Kantor hat durch sein hohes Engagement, sein fundiertes Fachwissen und seine außergewöhnliche Belastbarkeit in entscheidendem Maße zur Lösung komplexer Problemstellungen beigetragen. Sein Auftreten war stets korrekt und verbindlich."</p>
+        <div class="ref-author">Abteilungsleiter</div>
+        <div class="ref-company">Alte Leipziger Versicherung</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-quote">"</div>
+        <p class="ref-text" data-i18n="ref4_text">"Herr Kantor hat das Projekt NWM der SBB Cargo als Testmanager höchst professionell unterstützt. Er konnte seine breite Erfahrung erfolgreich einbringen. Für die Führung des Testteams, den methodischen Aufbau der Testaktivitäten sowie das Reporting gegenüber der Gesamtprojektleitung trug er die alleinige Verantwortung."</p>
+        <div class="ref-author">Gesamtprojektleiter NWM</div>
+        <div class="ref-company">Schweizerische Bundesbahnen (SBB)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OPEN SOURCE -->
+<section id="opensource">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="os_label">Community & Open Source</div>
+      <h2 class="section-title" data-i18n="os_title">Zurückgeben an die <span class="gradient-text">Community</span></h2>
+    </div>
+    <div class="os-grid fade-up">
+      <div class="os-card">
+        <div class="os-icon">☕</div>
+        <div class="os-name">Java SE 6</div>
+        <div class="os-role" data-i18n="os_role_contrib">JDK Contributor</div>
+        <div class="os-period">2006–2007</div>
+      </div>
+      <div class="os-card">
+        <div class="os-icon">🔴</div>
+        <div class="os-name">JBoss</div>
+        <div class="os-role" data-i18n="os_role_contrib">Code Contributor</div>
+        <div class="os-period">2008, 2009, 2012</div>
+      </div>
+      <div class="os-card">
+        <div class="os-icon">🌑</div>
+        <div class="os-name">Eclipse EPF</div>
+        <div class="os-role" data-i18n="os_role_founder">Mitgründer & Committer</div>
+        <div class="os-period">2007</div>
+      </div>
+      <div class="os-card">
+        <div class="os-icon">🦅</div>
+        <div class="os-name">Apache Karaf</div>
+        <div class="os-role" data-i18n="os_role_contrib">Code Contributor</div>
+        <div class="os-period">2012</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PUBLICATIONS -->
+<section id="pubs">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label" data-i18n="pubs_label">Publikationen & Seminare</div>
+      <h2 class="section-title" data-i18n="pubs_title">Wissen <span class="gradient-text">teilen</span></h2>
+    </div>
+    <div class="pubs-layout fade-up">
+      <div class="pub-card">
+        <div class="pub-icon">📰</div>
+        <div>
+          <div class="pub-type" data-i18n="pub_type_mag">Fachmagazin</div>
+          <div class="pub-title">Java Magazin</div>
+          <div class="pub-desc" data-i18n="pub1_desc">Mehrere Fachartikel zu Java Performance, Microservices und Cloud-Architekturen. Verfügbar auf jaxenter.de/author/vadimkantor</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">📖</div>
+        <div>
+          <div class="pub-type" data-i18n="pub_type_book">Buch (Kindle)</div>
+          <div class="pub-title">Mobile Technology</div>
+          <div class="pub-desc" data-i18n="pub2_desc">Veröffentlicht als Kindle-Edition. ASIN: B079NG437G</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">🎓</div>
+        <div>
+          <div class="pub-type" data-i18n="pub_type_seminar">Seminare & Workshops</div>
+          <div class="pub-title" data-i18n="pub3_title">Java Performance & Cloud</div>
+          <div class="pub-desc" data-i18n="pub3_desc">PostgreSQL Speicheroptimierung · Java Performance Tuning · GC-Optimierung · Reactive Kafka · Kubernetes & Gravity</div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon">👨‍🏫</div>
+        <div>
+          <div class="pub-type" data-i18n="pub_type_trainer">Trainer & Coach</div>
+          <div class="pub-title" data-i18n="pub4_title">Enterprise Java & SOA</div>
+          <div class="pub-desc" data-i18n="pub4_desc">Web Service Training, Spring-Schulungen, JEE-Coaching bei Deutsche Telekom, Deutsche Bahn und weiteren Großunternehmen.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="fade-up">
+      <div class="section-label" data-i18n="contact_label">Kontakt aufnehmen</div>
+      <h2 class="contact-cta-title" data-i18n="contact_title">Bereit für Ihr <span class="gradient-text">nächstes Projekt?</span></h2>
+      <p class="contact-cta-sub" data-i18n="contact_sub">Ich freue mich auf spannende Herausforderungen in den Bereichen Architektur, Cloud-Native-Entwicklung und technische Führung. Sprechen Sie mich an.</p>
+      <div class="contact-links">
+        <a href="mailto:kontakt@kantor-online.de" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">kontakt@kantor-online.de</div>
+          </div>
+        </a>
+        <a href="https://www.kantor-online.de" class="contact-link" target="_blank" rel="noopener">
+          <div class="contact-link-icon">🌐</div>
+          <div>
+            <div class="contact-link-label">Website</div>
+            <div class="contact-link-value">www.kantor-online.de</div>
+          </div>
+        </a>
+        <a href="https://jaxenter.de/author/vadimkantor" class="contact-link" target="_blank" rel="noopener">
+          <div class="contact-link-icon">📰</div>
+          <div>
+            <div class="contact-link-label">Java Magazin</div>
+            <div class="contact-link-value">jaxenter.de/author/vadimkantor</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="avail-box fade-up">
+      <div class="avail-header">
+        <div class="avail-dot"></div>
+        <div class="avail-title" data-i18n="avail_title">Verfügbar für Engagement</div>
+      </div>
+      <div class="avail-items">
+        <div class="avail-item"><span class="check">✓</span> <span data-i18n="avail1">Solution Architect (Remote / Vor-Ort)</span></div>
+        <div class="avail-item"><span class="check">✓</span> <span data-i18n="avail2">Dev Lead / Technical Lead</span></div>
+        <div class="avail-item"><span class="check">✓</span> <span data-i18n="avail3">Cloud-Native Beratung (AWS / Azure / GCP)</span></div>
+        <div class="avail-item"><span class="check">✓</span> <span data-i18n="avail4">DevOps & Platform Engineering</span></div>
+        <div class="avail-item"><span class="check">✓</span> <span data-i18n="avail5">Architektur-Reviews & Gutachten</span></div>
+        <div class="avail-item"><span class="check">✓</span> <span data-i18n="avail6">DE / EN / RU – deutschlandweit & international</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Vadim Kantor · <span data-i18n="footer_text">Solution Architect & IT Consultant · Deutschland</span></p>
+</footer>
+
+<script>
+  /* ===================================================
+     i18n TRANSLATIONS
+  =================================================== */
+  const translations = {
+    de: {
+      nav_value: "Mehrwert",
+      nav_expertise: "Expertise",
+      nav_projects: "Projekte",
+      nav_certs: "Zertifikate",
+      nav_refs: "Referenzen",
+      nav_contact: "Kontakt",
+      hero_badge: "Verfügbar für neue Projekte",
+      hero_title_line2: "Solution Architect &<br>IT Consultant",
+      hero_sub: "30+ Jahre Erfahrung an der Schnittstelle von Architektur, Cloud und Innovation. Von der Whiteboard-Skizze bis zum produktiven System – ich baue das, was bleibt.",
+      role1: "Solution Architect", role2: "Dev Lead", role3: "Cloud Consultant", role4: "DevOps Expert", role5: "Big Data Engineer",
+      stat1: "Jahre Erfahrung", stat2: "Personentage Projekte", stat3: "Zertifizierungen", stat4: "Sprachen",
+      photo_badge_title: "M.Sc. Math. Physik",
+      value_label: "Warum Vadim Kantor",
+      value_title: "Der Unterschied, der <span class=\"gradient-text\">zählt</span>",
+      value_sub: "Erfahrung allein reicht nicht – es braucht die Fähigkeit, Komplexität zu beherrschen, Teams zu führen und Systeme zu bauen, die skalieren.",
+      v1_title: "Architektur mit Tiefe", v1_text: "iSAQB-zertifiziert, über 900 Personentage in serviceorientierten IT-Architekturen. Von SOA bis Event-Driven – ich entwerfe Systeme, die unter echtem Last-Druck funktionieren.",
+      v2_title: "Cloud-Native von Grund auf", v2_text: "AWS Certified Solutions Architect, CKAD, Terraform Associate. Kubernetes, OpenShift, Helm – ich betreibe Container-Plattformen im Enterprise-Maßstab, nicht nur in der Sandbox.",
+      v3_title: "Big Data & Echtzeit", v3_text: "1300+ PT mit Apache Kafka, Flink, Spark. Ich baue Event-Streaming-Architekturen, die Millionen von Ereignissen pro Tag verarbeiten – zuverlässig, skalierbar, nachvollziehbar.",
+      v4_title: "Leadership & Mentoring", v4_text: "Scrum Master, technischer Projektleiter, Trainer – ich führe Teams mit klarer Kommunikation, treffe architektonische Entscheidungen und entwickle Entwickler weiter.",
+      v5_title: "Security by Design", v5_text: "OAuth2, Keycloak, JAAS, SSO – Sicherheitsarchitektur ist kein Afterthought, sondern integraler Bestandteil meiner Lösungen. 1100+ PT in Identity & Access Management.",
+      v6_title: "Mathematische Präzision", v6_text: "M.Sc. Mathematische Physik – ich löse Probleme analytisch. ML/DL-Erfahrung mit TensorFlow, Keras, Scikit-Learn. Performance-Engpässe finde ich dort, wo andere aufgeben.",
+      exp_label: "Technische Kompetenz", exp_title: "Expertise im <span class=\"gradient-text\">Detail</span>", exp_sub: "Breite Technologiebasis – tief verankert in jedem Bereich.",
+      domain_cloud: "Cloud & DevOps", domain_backend: "Backend & Architektur", domain_data: "Big Data & Streaming",
+      domain_databases: "Datenbanken", domain_frontend: "Frontend & UI", domain_ai: "AI & Machine Learning",
+      cloud_title: "Cloud-Native & DevOps", cloud_sub: "Über 1500+ Personentage in Container-Orchestrierung, CI/CD und Cloud-Infrastruktur bei Deutschen Blue-Chip-Unternehmen.",
+      backend_title: "Backend & Software-Architektur", backend_sub: "3.000+ Personentage in Java Enterprise-Entwicklung. Von J2EE über Spring Boot bis Quarkus Cloud-Native – ich beherrsche den gesamten Stack.",
+      data_title: "Big Data & Event Streaming", data_sub: "1300+ Personentage mit Apache Kafka. Ich baue Event-Driven Architekturen, die unter realem Produktionsdruck performen.",
+      db_title: "Datenbanken & Persistenz", db_sub: "4000+ Personentage – 25+ Jahre Datenbankexpertise. Von Oracle PL/SQL über PostgreSQL bis NoSQL in der Cloud.",
+      fe_title: "Frontend & Visualisierung", fe_sub: "Full-Stack-Kompetenz: Angular, React, TypeScript – plus Grafana Custom Plugins und Dashboard-Entwicklung.",
+      ai_title: "AI / Machine Learning", ai_sub: "Mathematisch fundiert durch M.Sc. in Mathematischer Physik. Praktische ML-Erfahrung in Produktionssystemen – Anomalieerkennung, Echtzeit-Analyse, Prognose.",
+      exp_7y: "~7 Jahre", exp_8y: "~8 Jahre", exp_10y: "~10 Jahre", exp_5y: "~5 Jahre", exp_25y: "~25 Jahre",
+      exp_15y: "~15 Jahre", exp_20y: "~20 Jahre", exp_6y: "~6 Jahre", exp_4y: "~4 Jahre", exp_varied: "variiert",
+      cert_ckad: "CKAD 2023 · AWS Solutions Architect · HashiCorp Terraform Associate",
+      cert_isaqb: "iSAQB CPSA · Java EE & SOA Architect (Sun/Oracle)",
+      cert_ml: "Google ML TensorFlow · Stanford ML (Coursera) · Apache Spark AI",
+      whyme_label: "Fit für Ihr Unternehmen", whyme_title: "Was Sie <span class=\"gradient-text\">wirklich bekommen</span>", whyme_sub: "Kein Berater, der Folien schreibt und verschwindet – sondern einer, der liefert.",
+      w1_title: "Sofort produktiv", w1_text: "Durch 30 Jahre Erfahrung in Logistik, Pharma, Telekom, Banking und Versicherung kennen ich die Muster. Kein monatelanges Einarbeiten – ich liefere vom ersten Sprint an.",
+      w2_title: "Technischer Anker im Team", w2_text: "Als Dev Lead oder Architekt halte ich die technische Vision zusammen. Code Reviews, Architekturentscheidungen, Eskalationen – ich überbrücke Fachbereich und Entwicklung.",
+      w3_title: "Enterprise-Klasse, ohne Overhead", w3_text: "Projekte bei Deutsche Bahn, Deutsche Telekom, Commerzbank, Deutsche Bank, Lufthansa – ich weiß, wie Lösungen im echten Enterprise-Umfeld funktionieren müssen.",
+      w4_title: "Kommunikation auf allen Ebenen", w4_text: "Technisch präzise mit dem Team, klar und verständlich mit dem Management. Ich moderiere, trainiere und präsentiere – auf Deutsch, Englisch und Russisch.",
+      proj_label: "Ausgewählte Projekte", proj_title: "Projekte, die <span class=\"gradient-text\">zählen</span>", proj_sub: "Ein Auszug aus über 30 abgeschlossenen Engagements bei führenden deutschen und internationalen Unternehmen.",
+      proj_role_arch: "Senior Solution Architect", proj_role_devops: "DevOps Experte & Cloud Berater", proj_role_bigdata: "Senior Big Data Engineer", proj_role_ci: "Senior CI/CD Berater", proj_role_backend: "Senior Backend Developer",
+      p1_title: "Big Data Event-Driven Architektur", p1_desc: "Skalierbare Lösung zur Datenspeicherung und -abfrage in AWS. Konsolidierung aus RabbitMQ, Kafka, MQTT, REST. Echtzeit-Monitoring mit OpenSearch/Kibana, CloudWatch, Grafana.",
+      p2_title: "Cloud-Plattform & Kubernetes Migration (KXS)", p2_desc: "Aufbau einer eigenen Cloud-Plattform, Migration von VMs in Container, Kubernetes-Cluster-Management, Kong API-Gateway-Integration, CI/CD-Optimierung.",
+      p3_title: "Event-Driven Echtzeit-Analyseplattform (RI)", p3_desc: "Datenkonsolidierung aus Kafka, RabbitMQ, Cassandra, Aurora. Anomalieerkennung mit ML (TensorFlow, Keras). State-Management mit Apache Flink und Spark.",
+      p4_title: "Continuous Delivery Plattform (Deutsche Telekom)", p4_desc: "Aufbau einer vollständigen CD-Plattform in der Telekom Cloud. Chef, Ansible, Puppet, Jenkins, OpenStack, OpenShift. 440 Personentage im Enterprise-Maßstab.",
+      p5_title: "Hochskalierbare Integrationsplattform (Telekom Kundencenter)", p5_desc: "ESB-basierte Integrationsplattform mit ELK-Stack als zentralem Log-Management-Tool. BPMN 2.0, WebSphere ESB, JBoss ESB, SAML 2.0, CI/CD.",
+      industry_logistics: "Logistik & Transport", industry_pharma: "Pharmaindustrie", industry_telco: "Telekommunikation",
+      certs_label: "Weiterbildung & Zertifizierungen", certs_title: "Lebenslang <span class=\"gradient-text\">lernend</span>", certs_sub: "Kontinuierliche Investition in das eigene Wissen – seit über 25 Jahren.",
+      refs_label: "Kundenstimmen", refs_title: "Was Kunden <span class=\"gradient-text\">sagen</span>",
+      ref1_text: "\"Der Berater ist in einer sehr kritischen Projektphase in das bestehende Team eingetreten und hat sich sehr schnell eingefunden. Er entwickelte ein generisches Framework für Performance- und Lasttests unserer hochkomplexen J2EE-Anwendung. Das Ergebnis ist ein vollständiges innovatives Produkt zur Performancemessung. Mit seiner Leistung waren wir stets außerordentlich zufrieden.\"",
+      ref2_text: "\"Herr Kantor verfügt über ein äußerst umfassendes und detailliertes Fachwissen sowohl im Testmanagement als auch in der Softwareprogrammierung, und er wendet die vorhandenen Methoden und Techniken jederzeit sehr wirksam in der Praxis an.\"",
+      ref3_text: "\"Herr Kantor hat durch sein hohes Engagement, sein fundiertes Fachwissen und seine außergewöhnliche Belastbarkeit in entscheidendem Maße zur Lösung komplexer Problemstellungen beigetragen. Sein Auftreten war stets korrekt und verbindlich.\"",
+      ref4_text: "\"Herr Kantor hat das Projekt NWM der SBB Cargo als Testmanager höchst professionell unterstützt. Für die Führung des Testteams, den methodischen Aufbau der Testaktivitäten sowie das Reporting gegenüber der Gesamtprojektleitung trug er die alleinige Verantwortung.\"",
+      os_label: "Community & Open Source", os_title: "Zurückgeben an die <span class=\"gradient-text\">Community</span>",
+      os_role_contrib: "Code Contributor", os_role_founder: "Mitgründer & Committer",
+      pubs_label: "Publikationen & Seminare", pubs_title: "Wissen <span class=\"gradient-text\">teilen</span>",
+      pub_type_mag: "Fachmagazin", pub_type_book: "Buch (Kindle)", pub_type_seminar: "Seminare & Workshops", pub_type_trainer: "Trainer & Coach",
+      pub1_desc: "Mehrere Fachartikel zu Java Performance, Microservices und Cloud-Architekturen. Verfügbar auf jaxenter.de/author/vadimkantor",
+      pub2_desc: "Veröffentlicht als Kindle-Edition. ASIN: B079NG437G",
+      pub3_title: "Java Performance & Cloud", pub3_desc: "PostgreSQL Speicheroptimierung · Java Performance Tuning · GC-Optimierung · Reactive Kafka · Kubernetes & Gravity",
+      pub4_title: "Enterprise Java & SOA", pub4_desc: "Web Service Training, Spring-Schulungen, JEE-Coaching bei Deutsche Telekom, Deutsche Bahn und weiteren Großunternehmen.",
+      contact_label: "Kontakt aufnehmen", contact_title: "Bereit für Ihr <span class=\"gradient-text\">nächstes Projekt?</span>",
+      contact_sub: "Ich freue mich auf spannende Herausforderungen in den Bereichen Architektur, Cloud-Native-Entwicklung und technische Führung. Sprechen Sie mich an.",
+      avail_title: "Verfügbar für Engagement",
+      avail1: "Solution Architect (Remote / Vor-Ort)", avail2: "Dev Lead / Technical Lead",
+      avail3: "Cloud-Native Beratung (AWS / Azure / GCP)", avail4: "DevOps & Platform Engineering",
+      avail5: "Architektur-Reviews & Gutachten", avail6: "DE / EN / RU – deutschlandweit & international",
+      footer_text: "Solution Architect & IT Consultant · Deutschland"
+    },
+    en: {
+      nav_value: "Value",
+      nav_expertise: "Expertise",
+      nav_projects: "Projects",
+      nav_certs: "Certifications",
+      nav_refs: "References",
+      nav_contact: "Contact",
+      hero_badge: "Available for new projects",
+      hero_title_line2: "Solution Architect &<br>IT Consultant",
+      hero_sub: "30+ years at the intersection of architecture, cloud and innovation. From whiteboard sketch to production-grade system – I build what lasts.",
+      role1: "Solution Architect", role2: "Dev Lead", role3: "Cloud Consultant", role4: "DevOps Expert", role5: "Big Data Engineer",
+      stat1: "Years Experience", stat2: "Project Person-Days", stat3: "Certifications", stat4: "Languages",
+      photo_badge_title: "M.Sc. Mathematical Physics",
+      value_label: "Why Vadim Kantor",
+      value_title: "The difference that <span class=\"gradient-text\">counts</span>",
+      value_sub: "Experience alone isn't enough – it takes the ability to master complexity, lead teams, and build systems that scale.",
+      v1_title: "Architecture in depth", v1_text: "iSAQB-certified, over 900 person-days in service-oriented IT architectures. From SOA to Event-Driven – I design systems that hold up under real production load.",
+      v2_title: "Cloud-Native from the ground up", v2_text: "AWS Certified Solutions Architect, CKAD, Terraform Associate. Kubernetes, OpenShift, Helm – I run container platforms at enterprise scale, not just in the sandbox.",
+      v3_title: "Big Data & Real-Time", v3_text: "1300+ PD with Apache Kafka, Flink, Spark. I build event-streaming architectures that process millions of events per day – reliably, scalably, traceably.",
+      v4_title: "Leadership & Mentoring", v4_text: "Scrum Master, technical project lead, trainer – I lead teams with clear communication, make architectural decisions and grow developers.",
+      v5_title: "Security by Design", v5_text: "OAuth2, Keycloak, JAAS, SSO – security architecture is never an afterthought. 1100+ PD in Identity & Access Management.",
+      v6_title: "Mathematical Precision", v6_text: "M.Sc. Mathematical Physics – I solve problems analytically. ML/DL experience with TensorFlow, Keras, Scikit-Learn. I find performance bottlenecks where others give up.",
+      exp_label: "Technical Skills", exp_title: "Expertise in <span class=\"gradient-text\">Detail</span>", exp_sub: "Broad technology foundation – deeply anchored in every area.",
+      domain_cloud: "Cloud & DevOps", domain_backend: "Backend & Architecture", domain_data: "Big Data & Streaming",
+      domain_databases: "Databases", domain_frontend: "Frontend & UI", domain_ai: "AI & Machine Learning",
+      cloud_title: "Cloud-Native & DevOps", cloud_sub: "1500+ person-days in container orchestration, CI/CD and cloud infrastructure at German blue-chip companies.",
+      backend_title: "Backend & Software Architecture", backend_sub: "3,000+ person-days in Java enterprise development. From J2EE to Spring Boot to Quarkus cloud-native – I master the full stack.",
+      data_title: "Big Data & Event Streaming", data_sub: "1300+ person-days with Apache Kafka. I build event-driven architectures that perform under real production pressure.",
+      db_title: "Databases & Persistence", db_sub: "4000+ person-days – 25+ years of database expertise. From Oracle PL/SQL through PostgreSQL to NoSQL in the cloud.",
+      fe_title: "Frontend & Visualization", fe_sub: "Full-stack competence: Angular, React, TypeScript – plus custom Grafana plugins and dashboard development.",
+      ai_title: "AI / Machine Learning", ai_sub: "Mathematically grounded through M.Sc. in Mathematical Physics. Practical ML experience in production systems – anomaly detection, real-time analysis, forecasting.",
+      exp_7y: "~7 years", exp_8y: "~8 years", exp_10y: "~10 years", exp_5y: "~5 years", exp_25y: "~25 years",
+      exp_15y: "~15 years", exp_20y: "~20 years", exp_6y: "~6 years", exp_4y: "~4 years", exp_varied: "varies",
+      cert_ckad: "CKAD 2023 · AWS Solutions Architect · HashiCorp Terraform Associate",
+      cert_isaqb: "iSAQB CPSA · Java EE & SOA Architect (Sun/Oracle)",
+      cert_ml: "Google ML TensorFlow · Stanford ML (Coursera) · Apache Spark AI",
+      whyme_label: "Fit for your company", whyme_title: "What you <span class=\"gradient-text\">actually get</span>", whyme_sub: "Not a consultant who writes slides and disappears – one who delivers.",
+      w1_title: "Immediately productive", w1_text: "With 30 years across logistics, pharma, telecom, banking and insurance, I know the patterns. No months of onboarding – I deliver from the first sprint.",
+      w2_title: "Technical anchor for the team", w2_text: "As Dev Lead or Architect I keep the technical vision intact. Code reviews, architecture decisions, escalations – I bridge business and engineering.",
+      w3_title: "Enterprise-grade, zero overhead", w3_text: "Projects at Deutsche Bahn, Deutsche Telekom, Commerzbank, Deutsche Bank, Lufthansa – I know what it takes to make solutions work in real enterprise environments.",
+      w4_title: "Communication at every level", w4_text: "Technically precise with the team, clear and concise with management. I facilitate, train and present – in German, English and Russian.",
+      proj_label: "Selected Projects", proj_title: "Projects that <span class=\"gradient-text\">matter</span>", proj_sub: "A selection from 30+ completed engagements at leading German and international companies.",
+      proj_role_arch: "Senior Solution Architect", proj_role_devops: "DevOps Expert & Cloud Consultant", proj_role_bigdata: "Senior Big Data Engineer", proj_role_ci: "Senior CI/CD Consultant", proj_role_backend: "Senior Backend Developer",
+      p1_title: "Big Data Event-Driven Architecture", p1_desc: "Scalable data storage and query solution on AWS. Consolidation from RabbitMQ, Kafka, MQTT, REST. Real-time monitoring with OpenSearch/Kibana, CloudWatch, Grafana.",
+      p2_title: "Cloud Platform & Kubernetes Migration (KXS)", p2_desc: "Built a custom cloud platform, migrated VMs to containers, Kubernetes cluster management, Kong API Gateway integration, CI/CD optimization.",
+      p3_title: "Event-Driven Real-Time Analytics Platform (RI)", p3_desc: "Data consolidation from Kafka, RabbitMQ, Cassandra, Aurora. Anomaly detection with ML (TensorFlow, Keras). State management with Apache Flink and Spark.",
+      p4_title: "Continuous Delivery Platform (Deutsche Telekom)", p4_desc: "Built a complete CD platform in the Telekom Cloud. Chef, Ansible, Puppet, Jenkins, OpenStack, OpenShift. 440 person-days at enterprise scale.",
+      p5_title: "Highly Scalable Integration Platform (Telekom Customer Center)", p5_desc: "ESB-based integration platform with ELK stack as central log-management tool. BPMN 2.0, WebSphere ESB, JBoss ESB, SAML 2.0, CI/CD.",
+      industry_logistics: "Logistics & Transport", industry_pharma: "Pharmaceutical", industry_telco: "Telecommunications",
+      certs_label: "Training & Certifications", certs_title: "Lifelong <span class=\"gradient-text\">learner</span>", certs_sub: "Continuous investment in knowledge – for over 25 years.",
+      refs_label: "Client Testimonials", refs_title: "What clients <span class=\"gradient-text\">say</span>",
+      ref1_text: "\"The consultant joined the existing team at a very critical project phase and integrated quickly. He developed a generic framework for performance and load tests of our highly complex J2EE application. The result is a complete innovative product for performance measurement. We were always extraordinarily satisfied with his performance.\"",
+      ref2_text: "\"Mr. Kantor possesses extremely comprehensive and detailed expertise both in test management and software programming, and applies the existing methods and techniques very effectively in practice at all times.\"",
+      ref3_text: "\"Mr. Kantor contributed decisively to solving complex problems through his high commitment, sound expertise and extraordinary resilience. His conduct was always correct and reliable.\"",
+      ref4_text: "\"Mr. Kantor provided highly professional support to the NWM project of SBB Cargo as test manager. He bore sole responsibility for leading the test team, methodically structuring test activities, and reporting to the overall project management.\"",
+      os_label: "Community & Open Source", os_title: "Giving back to the <span class=\"gradient-text\">community</span>",
+      os_role_contrib: "Code Contributor", os_role_founder: "Co-Founder & Committer",
+      pubs_label: "Publications & Seminars", pubs_title: "Sharing <span class=\"gradient-text\">knowledge</span>",
+      pub_type_mag: "Technical Magazine", pub_type_book: "Book (Kindle)", pub_type_seminar: "Seminars & Workshops", pub_type_trainer: "Trainer & Coach",
+      pub1_desc: "Multiple technical articles on Java performance, microservices and cloud architectures. Available at jaxenter.de/author/vadimkantor",
+      pub2_desc: "Published as Kindle edition. ASIN: B079NG437G",
+      pub3_title: "Java Performance & Cloud", pub3_desc: "PostgreSQL Storage Optimization · Java Performance Tuning · GC Optimization · Reactive Kafka · Kubernetes & Gravity",
+      pub4_title: "Enterprise Java & SOA", pub4_desc: "Web Service training, Spring coaching, JEE training at Deutsche Telekom, Deutsche Bahn and other major enterprises.",
+      contact_label: "Get in touch", contact_title: "Ready for your <span class=\"gradient-text\">next project?</span>",
+      contact_sub: "I look forward to exciting challenges in architecture, cloud-native development and technical leadership. Let's talk.",
+      avail_title: "Available for Engagement",
+      avail1: "Solution Architect (Remote / On-Site)", avail2: "Dev Lead / Technical Lead",
+      avail3: "Cloud-Native Consulting (AWS / Azure / GCP)", avail4: "DevOps & Platform Engineering",
+      avail5: "Architecture Reviews & Assessments", avail6: "DE / EN / RU – Germany-wide & international",
+      footer_text: "Solution Architect & IT Consultant · Germany"
+    }
+  };
+
+  let currentLang = 'de';
+
+  function applyTranslations(lang) {
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.documentElement.lang = lang;
+    document.getElementById('langFlag').textContent = lang === 'de' ? '🇬🇧' : '🇩🇪';
+    document.getElementById('langLabel').textContent = lang === 'de' ? 'EN' : 'DE';
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'de' ? 'en' : 'de';
+    applyTranslations(currentLang);
+  }
+
+  /* ===================================================
+     SKILL PANEL TABS
+  =================================================== */
+  function showPanel(id) {
+    document.querySelectorAll('.skill-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.skill-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    document.getElementById('btn-' + id).classList.add('active');
+    // Trigger bar animations on panel show
+    setTimeout(() => animateBarsInPanel('panel-' + id), 50);
+  }
+
+  /* ===================================================
+     SKILL BAR ANIMATIONS
+  =================================================== */
+  function animateBarsInPanel(panelId) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    panel.querySelectorAll('.skill-bar-fill').forEach(bar => {
+      const w = bar.getAttribute('data-width') || 0;
+      bar.style.width = w + '%';
+    });
+  }
+
+  /* ===================================================
+     INTERSECTION OBSERVER (fade-up + bar animations)
+  =================================================== */
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // animate bars if inside visible section
+        const bars = entry.target.querySelectorAll('.skill-bar-fill');
+        setTimeout(() => {
+          bars.forEach(bar => {
+            bar.style.width = (bar.getAttribute('data-width') || 0) + '%';
+          });
+        }, 200);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Animate initial active panel bars when scrolled into view
+  const expertiseSection = document.getElementById('expertise');
+  const expertiseObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      setTimeout(() => animateBarsInPanel('panel-cloud'), 300);
+      expertiseObserver.unobserve(expertiseSection);
+    }
+  }, { threshold: 0.1 });
+  expertiseObserver.observe(expertiseSection);
+
+  /* ===================================================
+     MOBILE MENU
+  =================================================== */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  /* ===================================================
+     NAV SCROLL EFFECT
+  =================================================== */
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(5,8,16,0.98)';
+    } else {
+      nav.style.background = 'rgba(5,8,16,0.85)';
+    }
+  });
+
+  /* ===================================================
+     COUNTER ANIMATIONS
+  =================================================== */
+  function animateCounter(el, target, suffix) {
+    let start = 0;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const heroStats = document.querySelector('.hero-stats');
+  const statsObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      const nums = document.querySelectorAll('.stat-num');
+      if (nums[0]) animateCounter(nums[0], 30, '+');
+      if (nums[1]) animateCounter(nums[1], 4000, '+');
+      if (nums[2]) animateCounter(nums[2], 15, '+');
+      statsObserver.unobserve(heroStats);
+    }
+  }, { threshold: 0.5 });
+  if (heroStats) statsObserver.observe(heroStats);
+</script>
+</body>
+</html>
